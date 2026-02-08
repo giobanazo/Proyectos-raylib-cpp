@@ -51,11 +51,10 @@ void Game::HandleInput() {
       MoveBlockDown();
       break;
 
-
     case KEY_W:
-      MoveBlockUp();
+      RotateBlock();
       break;
-    
+  
     default:
 
       break;
@@ -83,13 +82,6 @@ void Game::MoveBlockDown() {
   }
 }
 
-void Game::MoveBlockUp() {
-  currentBlock.Move(-1, 0);
-  if (IsBlockOutside()) {
-    currentBlock.Move(1, 0);
-  }
-}
-
 
 bool Game::IsBlockOutside() {
   std::vector<Position> tiles = currentBlock.GetCellPositions();
@@ -101,4 +93,12 @@ bool Game::IsBlockOutside() {
   }
 
   return false;
+}
+
+
+void Game::RotateBlock() {
+  currentBlock.Rotate();
+  if (IsBlockOutside()) {
+    currentBlock.UndoRotation();
+  }
 }
