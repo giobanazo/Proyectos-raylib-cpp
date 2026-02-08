@@ -13,6 +13,7 @@ class Grid {
     void Print();
     void Draw();
     int grid[20][10]; // 20 = filas  |  10 = columnas
+    bool IsCellOutside(int row, int column);
 
   private:
     int numRows;
