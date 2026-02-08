@@ -1,5 +1,6 @@
 #include "raylib.h"
 #include "grid.h"
+#include "blocks.cpp"
 
 int main() {
 
@@ -9,16 +10,9 @@ int main() {
   SetTargetFPS(60);
 
   Grid grid = Grid();
-
-  grid.grid[4][2] = 1;    
-  grid.grid[5][2] = 1;
-  grid.grid[6][2] = 1;
-  grid.grid[7][2] = 1;
-  grid.grid[8][2] = 1;
-  grid.grid[9][2] = 1;
-  grid.grid[10][2] = 1;
-
   grid.Print();
+
+  ZBlock block = ZBlock();
 
   while (!WindowShouldClose()) {
 
@@ -26,6 +20,7 @@ int main() {
       ClearBackground(darkBlue);
 
       grid.Draw();
+      block.Draw();
 
     EndDrawing();
 
