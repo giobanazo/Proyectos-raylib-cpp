@@ -8,6 +8,7 @@ class Game {
     Grid grid;
     Block GetRandomBlock();
     std::vector<Block> GetAllBlocks();
+    bool gameOver = false;
     void Draw();
     void HandleInput();
     void MoveBlockLeft();
@@ -19,6 +20,7 @@ class Game {
     void RotateBlock();
     void LockBlock();
     bool BlockFits();
+    void Reset();
     std::vector<Block> blocks;
     Block currentBlock;
     Block nextBlock;
