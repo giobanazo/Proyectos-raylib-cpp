@@ -119,6 +119,7 @@ void Game::LockBlock() {
   el siguente bloque */
   currentBlock = nextBlock;
   nextBlock = GetRandomBlock();
+  grid.ClearFullRows();
 }
 
 
