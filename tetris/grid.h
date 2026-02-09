@@ -12,8 +12,10 @@ class Grid {
     void Initialize();
     void Print();
     void Draw();
-    int grid[20][10]; // 20 = filas  |  10 = columnas
     bool IsCellOutside(int row, int column);
+    bool IsCellEmpty(int row, int column);
+    int grid[20][10]; // 20 = filas  |  10 = columnas
+
 
   private:
     int numRows;

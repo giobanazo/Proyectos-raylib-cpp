@@ -24,7 +24,8 @@ void Block::Move(int rows, int columns) {
 
 
 std::vector<Position> Block::GetCellPositions() {
-  std::vector<Position> tiles = cells[rotationState];
+  // tiles = cuadrito de la ficha
+  std::vector<Position> tiles = cells[rotationState]; // cells la seteamos en la clase hija de Block (Blocks)
   std::vector<Position> movedTiles;
 
   for(Position item: tiles) {

@@ -63,22 +63,25 @@ void Game::HandleInput() {
 
 void Game::MoveBlockLeft() {
   currentBlock.Move(0, -1);
-  if (IsBlockOutside()) {
+  /* IsBlockOutSide() Verifica si en el siguiente movimiento de la ficha no 
+  se pase de los limites de la grilla */
+  if (IsBlockOutside() || BlockFits() == false) {
     currentBlock.Move(0, 1); 
   }
 }
 
 void Game::MoveBlockRight() {
   currentBlock.Move(0, 1);
-  if (IsBlockOutside()) {
+  if (IsBlockOutside() || BlockFits() == false) {
     currentBlock.Move(0, -1);
   }
 }
 
 void Game::MoveBlockDown() {
   currentBlock.Move(1, 0);
-  if (IsBlockOutside()) {
+  if (IsBlockOutside() || BlockFits() == false) {
     currentBlock.Move(-1, 0); 
+    LockBlock();
   }
 }
 
@@ -98,7 +101,37 @@ bool Game::IsBlockOutside() {
 
 void Game::RotateBlock() {
   currentBlock.Rotate();
-  if (IsBlockOutside()) {
+  if (IsBlockOutside() || BlockFits() == false) {
     currentBlock.UndoRotation();
   }
+}
+
+void Game::LockBlock() {
+  std::vector<Position> tiles = currentBlock.GetCellPositions();
+
+  // Actualizamos la grilla 
+  for(Position item: tiles) {
+    grid.grid[item.row][item.column] = currentBlock.id;
+  }
+
+  /* Cuando se termine el bucle for de arriba, se actualiza el bloque
+  actual para que se pase a otro bloque y el usuario pueda jugar con 
+  el siguente bloque */
+  currentBlock = nextBlock;
+  nextBlock = GetRandomBlock();
+}
+
+
+/* Verifica si en el siguiente movimiento del jugador con la ficha (W, A, S, D)
+la celda esta vacia y si no esta vacia retorna falso y devuelve la ficha 
+a la posición anterior del jugador */
+bool Game::BlockFits() {
+  std::vector<Position> tiles = currentBlock.GetCellPositions();
+  for (Position item: tiles) {
+    if (grid.IsCellEmpty(item.row, item.column) == false) {
+      return false;
+    }
+  }
+
+  return true;
 }
