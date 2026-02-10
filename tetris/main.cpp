@@ -1,5 +1,6 @@
 #include "raylib.h"
 #include "game.h"
+#include "colors.h"
 
 
 // Esto sirve para hacer un retardo y para 
@@ -15,11 +16,10 @@ bool EventTriggered(double interval) {
 }
 
 int main() {
-
-  Color darkBlue = {44, 44, 127, 255};
-
-  InitWindow(300, 600, "raylib Tetris");
+  InitWindow(500, 620, "raylib Tetris");
   SetTargetFPS(60);
+
+  Font font = LoadFontEx("monogram.ttf", 64, 0, 0);
 
   Game game = Game();
 
@@ -32,6 +32,13 @@ int main() {
     BeginDrawing();
       game.HandleInput();
       ClearBackground(darkBlue);
+      DrawTextEx(font, "Score", {360, 15}, 38, 2, WHITE);
+      DrawTextEx(font, "Next", {370, 175}, 38, 2, WHITE);
+      if (game.gameOver) {
+        DrawTextEx(font, "GAME OVER", {320, 450}, 38, 2, WHITE);
+      }
+      DrawRectangleRounded({320, 55, 170, 60}, 0.3, 6, lightBlue);
+      DrawRectangleRounded({320,215, 170, 180}, 0.3, 6, lightBlue);
       game.Draw();
     EndDrawing();
 
