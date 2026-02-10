@@ -9,6 +9,7 @@ class Game {
     Block GetRandomBlock();
     std::vector<Block> GetAllBlocks();
     bool gameOver = false;
+    int score;
     void Draw();
     void HandleInput();
     void MoveBlockLeft();
@@ -21,6 +22,7 @@ class Game {
     void LockBlock();
     bool BlockFits();
     void Reset();
+    void UpdateScore(int linesCleared, int moveDownPoints);
     std::vector<Block> blocks;
     Block currentBlock;
     Block nextBlock;
