@@ -20,10 +20,10 @@ int main() {
   SetTargetFPS(60);
 
   Font font = LoadFontEx("monogram.ttf", 64, 0, 0);
-
   Game game = Game();
 
   while (!WindowShouldClose()) {
+    UpdateMusicStream(game.music);
 
     if (EventTriggered(0.2)) {
       game.MoveBlockDown();

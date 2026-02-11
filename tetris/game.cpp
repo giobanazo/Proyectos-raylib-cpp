@@ -8,6 +8,27 @@ Game::Game() {
   nextBlock = GetRandomBlock();
   gameOver = false;
   score = 0;
+  // Inicializa el dispositivo de audio para reproducir sonido en un juego
+  InitAudioDevice();
+  // LoadMusicStream() es para cargar musica
+  music = LoadMusicStream("music.mp3");
+  // Iniciar la musica
+  PlayMusicStream(music);
+
+  // LoadSound() Es para cargar efectos de sonido
+  rotateSound = LoadSound("rotate.mp3");
+  clearSound = LoadSound("clear.mp3");
+}
+
+
+// Este es el destructor
+Game::~Game() {
+  UnloadMusicStream(music);
+  UnloadSound(rotateSound);
+  UnloadSound(clearSound);
+
+  // Desactiva el dispositivo de audio
+  CloseAudioDevice();
 }
 
 Block Game::GetRandomBlock() {
@@ -133,6 +154,8 @@ void Game::RotateBlock() {
     currentBlock.Rotate();
     if (IsBlockOutside() || BlockFits() == false) {
       currentBlock.UndoRotation();
+    } else {
+      PlaySound(rotateSound);
     }
   }
 }
@@ -155,7 +178,10 @@ void Game::LockBlock() {
 
   nextBlock = GetRandomBlock();
   int rowsCleared = grid.ClearFullRows();
-  UpdateScore(rowsCleared, 0);
+  if (rowsCleared > 0) {
+    PlaySound(clearSound);
+    UpdateScore(rowsCleared, 0);
+  }
 }
 
 
