@@ -1,4 +1,5 @@
 #include "raylib.h"
+#include "raymath.h"
 
 /* deque es un tipo de dato que se puede agregar datos tanto al principio
 como al final */
@@ -11,9 +12,22 @@ Color darkGreen = {43, 51, 24, 255};
 int cellSize = 28;
 int cellCount = 25;
 
+double lastUpdateTime = 0;
+
+bool eventTriggered(double interval) {
+  double currentTime = GetTime();
+  if (currentTime - lastUpdateTime >= interval) {
+    lastUpdateTime = currentTime;
+    return true;
+  }
+  return false;
+}
+
 class Snake {
   public:
     std::deque<Vector2> body = {Vector2{6, 9}, Vector2{5, 9}, Vector2{4, 9}};
+    Vector2 direction = {1, 0};
+
 
     void Draw() {
       for (int i = 0; i < body.size(); i++) {
@@ -22,6 +36,13 @@ class Snake {
         Rectangle segment = Rectangle{x * cellSize, y * cellSize, (float)cellSize, (float)cellSize};
         DrawRectangleRounded(segment, 0.5, 6, darkGreen);
       }
+    }
+
+    void Update() {
+      /* pop_back() elimina el último elemento del deque */
+      body.pop_back();
+      // push_front agrega un elemento al inicio del deque
+      body.push_front(Vector2Add(body[0], direction)); // Vector2Add suma de vectores de tipo Vector2
     }
 };
 
@@ -60,6 +81,8 @@ class Food {
     }
 };
 
+
+
 int main() {
   InitWindow(cellSize * cellCount, cellSize * cellCount, "Snake - Raylib");
   SetTargetFPS(60);
@@ -70,6 +93,23 @@ int main() {
   while (!WindowShouldClose()) {
     BeginDrawing();
       ClearBackground(green);
+
+      if (eventTriggered(0.2)) {
+        snake.Update();
+      }
+
+      if (IsKeyPressed(KEY_W) && snake.direction.y != 1) {
+        snake.direction = {0, -1};
+      }
+      if (IsKeyPressed(KEY_S) && snake.direction.y != -1) {
+        snake.direction = {0, 1};
+      }
+      if (IsKeyPressed(KEY_A) && snake.direction.x != 1) {
+        snake.direction = {-1, 0};
+      }
+      if (IsKeyPressed(KEY_D) && snake.direction.x != -1) {
+        snake.direction = {1, 0};
+      }
 
       snake.Draw();
       food.Draw();
