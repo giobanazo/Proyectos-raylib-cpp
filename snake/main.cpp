@@ -38,7 +38,7 @@ class Snake {
   public:
     std::deque<Vector2> body = {Vector2{6, 9}, Vector2{5, 9}, Vector2{4, 9}};
     Vector2 direction = {1, 0};
-
+    bool addSegment = false;
 
     void Draw() {
       for (int i = 0; i < body.size(); i++) {
@@ -50,10 +50,15 @@ class Snake {
     }
 
     void Update() {
-      /* pop_back() elimina el último elemento del deque */
-      body.pop_back();
       // push_front agrega un elemento al inicio del deque
       body.push_front(Vector2Add(body[0], direction)); // Vector2Add suma de vectores de tipo Vector2
+
+      if (addSegment == true) {
+        addSegment = false;
+      } else {
+        /* pop_back() elimina el último elemento del deque */
+        body.pop_back();
+      }
     }
 };
 
@@ -121,6 +126,7 @@ class Game {
     void CheckCollisionWithFood() {
       if (Vector2Equals(snake.body[0], food.position)) {
         food.position = food.GenerateRandomPosition(snake.body);
+        snake.addSegment = true;
       }
     }
 };
