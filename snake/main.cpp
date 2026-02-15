@@ -82,40 +82,53 @@ class Food {
 };
 
 
+class Game {
+  public:
+    Snake snake = Snake();
+    Food food = Food();
+
+    void Draw() {
+      food.Draw();
+      snake.Draw();
+    }
+
+    void Update() {
+      snake.Update();
+    }
+};
+
 
 int main() {
   InitWindow(cellSize * cellCount, cellSize * cellCount, "Snake - Raylib");
   SetTargetFPS(60);
 
-  Snake snake = Snake();
-  Food food = Food();
+  Game game = Game();
 
   while (!WindowShouldClose()) {
     BeginDrawing();
       ClearBackground(green);
 
       if (eventTriggered(0.2)) {
-        snake.Update();
+        game.Update();
       }
 
-      if (IsKeyPressed(KEY_W) && snake.direction.y != 1) {
-        snake.direction = {0, -1};
+      if (IsKeyPressed(KEY_W) && game.snake.direction.y != 1) {
+        game.snake.direction = {0, -1};
       }
-      if (IsKeyPressed(KEY_S) && snake.direction.y != -1) {
-        snake.direction = {0, 1};
+      if (IsKeyPressed(KEY_S) && game.snake.direction.y != -1) {
+        game.snake.direction = {0, 1};
       }
-      if (IsKeyPressed(KEY_A) && snake.direction.x != 1) {
-        snake.direction = {-1, 0};
+      if (IsKeyPressed(KEY_A) && game.snake.direction.x != 1) {
+        game.snake.direction = {-1, 0};
       }
-      if (IsKeyPressed(KEY_D) && snake.direction.x != -1) {
-        snake.direction = {1, 0};
+      if (IsKeyPressed(KEY_D) && game.snake.direction.x != -1) {
+        game.snake.direction = {1, 0};
       }
 
-      snake.Draw();
-      food.Draw();
-
-      EndDrawing();
-    }
+      game.Draw();
+      
+    EndDrawing();
+  }
 
   CloseWindow();
   return 0;
