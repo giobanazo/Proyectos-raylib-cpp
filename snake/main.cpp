@@ -9,8 +9,9 @@ como al final */
 Color green = {173, 204, 96, 255};
 Color darkGreen = {43, 51, 24, 255};
 
-int cellSize = 28;
+int cellSize = 24;
 int cellCount = 25;
+int offset = 50;
 
 double lastUpdateTime = 0;
 
@@ -44,7 +45,7 @@ class Snake {
       for (int i = 0; i < body.size(); i++) {
         float x = body[i].x;
         float y = body[i].y;
-        Rectangle segment = Rectangle{x * cellSize, y * cellSize, (float)cellSize, (float)cellSize};
+        Rectangle segment = Rectangle{offset + x * cellSize, offset + y * cellSize, (float)cellSize, (float)cellSize};
         DrawRectangleRounded(segment, 0.5, 6, darkGreen);
       }
     }
@@ -92,7 +93,7 @@ class Food {
     }
 
     void Draw() {
-      DrawTexture(texture, position.x * cellSize, position.y * cellSize, WHITE);
+      DrawTexture(texture, offset + position.x * cellSize, offset + position.y * cellSize, WHITE);
     }
 
     Vector2 GenerateRandomCell() {
@@ -166,7 +167,7 @@ class Game {
 
 
 int main() {
-  InitWindow(cellSize * cellCount, cellSize * cellCount, "Snake - Raylib");
+  InitWindow(2 * offset + cellSize * cellCount, 2 * offset + cellSize * cellCount, "Snake - Raylib");
   SetTargetFPS(60);
 
   Game game = Game();
@@ -196,8 +197,10 @@ int main() {
         game.running = true;
       }
 
+      // Outline: creamos el recaudro
+      DrawRectangleLinesEx(Rectangle{(float)offset - 5, (float)offset -5, (float)cellSize * cellCount + 10, (float)cellSize * cellCount + 10}, 5, darkGreen);
+      DrawText("Retro Snake", offset - 5, 7, 35, darkGreen);
       game.Draw();
-      
     EndDrawing();
   }
 
