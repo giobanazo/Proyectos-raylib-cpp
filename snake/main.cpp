@@ -119,6 +119,7 @@ class Game {
     Snake snake = Snake();
     Food food = Food(snake.body);
     bool running = true;
+    int score = 0;
 
     void Draw() {
       food.Draw();
@@ -138,6 +139,7 @@ class Game {
       if (Vector2Equals(snake.body[0], food.position)) {
         food.position = food.GenerateRandomPosition(snake.body);
         snake.addSegment = true;
+        score ++;
       }
     }
 
@@ -153,6 +155,7 @@ class Game {
       snake.Reset();
       food.position = food.GenerateRandomPosition(snake.body);
       running = false;
+      score = 0;
     }
 
     void CheckCollisionWithEdges() {
@@ -200,6 +203,7 @@ int main() {
       // Outline: creamos el recaudro
       DrawRectangleLinesEx(Rectangle{(float)offset - 5, (float)offset -5, (float)cellSize * cellCount + 10, (float)cellSize * cellCount + 10}, 5, darkGreen);
       DrawText("Retro Snake", offset - 5, 7, 35, darkGreen);
+      DrawText(TextFormat("%i", game.score), offset - 5, offset + cellSize * cellCount + 12, 35, darkGreen);
       game.Draw();
     EndDrawing();
   }
