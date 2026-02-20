@@ -4,37 +4,26 @@
 using namespace std;
 
 int main() {
-  const int SCREEN_WIDTH = 800;
-  const int SCREEN_HEIGHT = 600;
+  const int screen_width = 1180;
+  const int screen_height = 700;
 
-  int ball_x = 100;
-  int ball_y = 100;
-  int ball_speed_x = 5;
-  int ball_speed_y = 5;
-  int ball_radius = 15;
-
-  cout << "Hello World" << endl;
-
-  InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "My first RAYLIB program!");
+  InitWindow(screen_width, screen_height, "My Pong Game!");
   SetTargetFPS(60);
 
-  while (WindowShouldClose() == false){
-    ball_x += ball_speed_x;
-    ball_y += ball_speed_y;
+  while(!WindowShouldClose()) {
 
-    if (ball_x + ball_radius >= SCREEN_WIDTH || ball_x - ball_radius <= 0) {
-      ball_speed_x *= -1;
-    }
-
-    if (ball_y + ball_radius >= SCREEN_HEIGHT || ball_y - ball_radius <= 0) {
-      ball_speed_y *= -1;
-    }
 
     BeginDrawing();
-      ClearBackground(BLACK);
-      DrawCircle(ball_x, ball_y, ball_radius, WHITE);
+
+      DrawLine(screen_width / 2, 0, screen_width / 2, screen_height, WHITE);
+      DrawCircle(screen_width / 2, screen_height / 2, 20, WHITE);
+
+      // el 60 lo sacamos de la altura del rectangulo (120) dividido entre 2
+      DrawRectangle(10, screen_height / 2 - 60 , 25, 120, WHITE);
+      DrawRectangle(screen_width - 35, screen_height / 2 - 60, 25, 120, WHITE);
     EndDrawing();
   }
 
   CloseWindow();
+  return 0;
 }
