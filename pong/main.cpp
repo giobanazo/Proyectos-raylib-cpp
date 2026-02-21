@@ -3,6 +3,9 @@
 
 using namespace std;
 
+int player_score = 0;
+int cpu_score = 0;
+
 class Ball {
   public:
     float x, y;
@@ -21,9 +24,24 @@ class Ball {
         speed_y *= -1;
       }
 
-      if (x + radius >= GetScreenWidth() || x - radius <= 0) {
-        speed_x *= -1;
+      if (x + radius >= GetScreenWidth()) { // CPU gana punto
+        cpu_score++;
+        ResetBall();
       }
+
+      if (x - radius <= 0) { // Jugado gana punto
+        player_score++;
+        ResetBall();
+      }
+    }
+
+    void ResetBall() {
+      x = GetScreenWidth() / 2;
+      y = GetScreenHeight() / 2;
+
+      int speed_choice[2] = {-1, 1};
+      speed_x *= speed_choice[GetRandomValue(0, 1)];
+      speed_y *= speed_choice[GetRandomValue(0, 1)];
     }
 };
 
@@ -124,6 +142,9 @@ int main() {
       ball.Draw();
       player.Draw();
       cpu.Draw();
+
+      DrawText(TextFormat("%i", cpu_score), screen_width / 4 - 20, 20, 80, WHITE);
+      DrawText(TextFormat("%i", player_score), 3 * screen_width / 4 - 20, 20, 80, WHITE);
     EndDrawing();
   }
 
