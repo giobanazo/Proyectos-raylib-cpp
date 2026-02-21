@@ -16,6 +16,7 @@ class Ball {
       x += speed_x;
       y += speed_y;
 
+      // Evitar que la paleta se pase de los bordes de la ventana
       if (y + radius >= GetScreenHeight() || y - radius <= 0) {
         speed_y *= -1;
       }
@@ -27,6 +28,17 @@ class Ball {
 };
 
 class Paddle {
+  protected:
+    void LimitMovement() {
+      if (y <= 0) {
+        y = 0;
+      }
+
+      if (y + height >= GetScreenHeight()) {
+        y = GetScreenHeight() - height;
+      }
+    }
+
   public:
     float x, y, width, height;
     int speed;
@@ -44,18 +56,28 @@ class Paddle {
         y += speed;
       }
 
-      if (y <= 0) {
-        y = 0;
+      LimitMovement();
+    }
+};
+
+class CPUPaddle: public Paddle {
+  public: 
+    void Update(int ball_y) {
+      if (y + height / 2 > ball_y) {
+        y -= speed;
       }
 
-      if (y + height >= GetScreenHeight()) {
-        y = GetScreenHeight() - height;
+      if (y + height / 2 <= ball_y) {
+        y += speed;
       }
+
+      LimitMovement();
     }
 };
 
 Ball ball;
 Paddle player;
+CPUPaddle cpu;
 
 int main() {
   const int screen_width = 1180;
@@ -76,19 +98,24 @@ int main() {
   player.y = screen_height / 2 - player.height / 2;
   player.speed = 6;
 
+  cpu.width = 25;
+  cpu.height = 120;
+  cpu.x = 10;
+  cpu.y = screen_height / 2 - cpu.height / 2;
+  cpu.speed = 6;
+
   while(!WindowShouldClose()) {
     ball.Update();
     player.Update();
+    cpu.Update(ball.y);
 
     BeginDrawing();
       ClearBackground(BLACK);
       DrawLine(screen_width / 2, 0, screen_width / 2, screen_height, WHITE);
     
       ball.Draw();
-
-      // el 60 lo sacamos de la altura del rectangulo (120) dividido entre 2
-      DrawRectangle(10, screen_height / 2 - 60 , 25, 120, WHITE);
       player.Draw();
+      cpu.Draw();
     EndDrawing();
   }
 
