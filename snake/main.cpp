@@ -77,7 +77,7 @@ class Food {
 
     // Constructor
     Food(std::deque<Vector2> snakeBody) {
-      Image image = LoadImage("food.png");
+      Image image = LoadImage("assets/food.png");
       /* Texture2D es un tipo de datos optimizado para el procesamiento 
       de GPU y hace una representación mas rapida */
       texture = LoadTextureFromImage(image);
@@ -125,8 +125,8 @@ class Game {
 
     Game() {
       InitAudioDevice();
-      eatSound = LoadSound("eat.mp3");
-      wallSound = LoadSound("wall.mp3");
+      eatSound = LoadSound("assets/eat.mp3");
+      wallSound = LoadSound("assets/wall.mp3");
     }
 
     ~Game() {
