@@ -1,29 +1,35 @@
 # Proyectos-raylib-cpp
 
-# 1. Crear carpeta de build (solo la primera vez)
+# 1. Traer la libreria (raylib) en su versión 5.5 en la raiz del proyecto 
+
+git clone --branch 5.5 --depth 1 https://github.com/raysan5/raylib.git
+
+
+
+# 2. Crear carpeta de build (solo la primera vez)
   
-  mkdir build && cd build
+mkdir build && cd build
 
 
 
-# 2. Configurar el proyecto
+# 3. Configurar el proyecto
   
-  cmake ..
+cmake ..
 
 
 
-# 3. Compilar (usa todos los núcleos del CPU)
+# 4. Compilar (usa todos los núcleos del CPU)
   
-  cmake --build . -j$(nproc)
+cmake --build . -j$(nproc)
 
 
 
-# 4. Ejecutar el juego que quieras (tetris, pong, snake o clock) [Tienes que estas dentro de la carpeta build]
+# 5. Ejecutar el juego que quieras (tetris, pong, snake o clock) [Tienes que estas dentro de la carpeta build]
 
-  snake/snake
+snake/snake
 
-  pong/pong
+pong/pong
 
-  tetris/tetris
+tetris/tetris
 
-  clock/clock
+clock/clock
