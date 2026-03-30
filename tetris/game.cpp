@@ -11,13 +11,13 @@ Game::Game() {
   // Inicializa el dispositivo de audio para reproducir sonido en un juego
   InitAudioDevice();
   // LoadMusicStream() es para cargar musica
-  music = LoadMusicStream("music.mp3");
+  music = LoadMusicStream("assets/music.mp3");
   // Iniciar la musica
   PlayMusicStream(music);
 
   // LoadSound() Es para cargar efectos de sonido
-  rotateSound = LoadSound("rotate.mp3");
-  clearSound = LoadSound("clear.mp3");
+  rotateSound = LoadSound("assets/rotate.mp3");
+  clearSound = LoadSound("assets/clear.mp3");
 }
 
 

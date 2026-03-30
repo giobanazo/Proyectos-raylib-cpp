@@ -9,3 +9,4 @@ add_subdirectory(raylib)
 # Agrega cada juego
 add_subdirectory(snake)
 add_subdirectory(pong)
+add_subdirectory(tetris)
