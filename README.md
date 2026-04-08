@@ -24,7 +24,7 @@ cmake --build . -j$(nproc)
 
 
 
-# 5. Ejecutar el juego que quieras (tetris, pong, snake o clock) [Tienes que estas dentro de la carpeta build]
+# 5. Ejecutar el juego que quieras (tetris, pong, snake o clock) [Tienes que estar dentro de la carpeta build]
 
 snake/snake
 
